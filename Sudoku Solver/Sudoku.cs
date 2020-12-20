@@ -71,7 +71,7 @@ namespace Sudoku_Solver
                 for (byte j = 0; j < 9; j++)
                 {
                     if (cellValues[i, j] != 0)
-                        SetCell(ref cells, i, j, cellValues[i, j]);
+                        SetCell(cells, i, j, cellValues[i, j]);
                 }
             }
         }
@@ -79,7 +79,7 @@ namespace Sudoku_Solver
         //***********************************************************************
         //Private Methods
         //Sets the value for a cell
-        private void SetCell(ref cell[,] board, byte row, byte col, byte number)
+        private void SetCell(cell[,] board, byte row, byte col, byte number)
         {
             board[row, col].Set(number);
             //Updates the row's possibleNumbers
@@ -104,7 +104,7 @@ namespace Sudoku_Solver
 
         //------------------------------------------------------
         //Checks if the current board is impossible
-        private bool IsImpossible(ref cell[,] board)
+        private bool IsImpossible(cell[,] board)
         {
             for (byte i = 0; i < 9; i++)
             {
@@ -119,7 +119,7 @@ namespace Sudoku_Solver
 
         //-------------------------------------------------------
         //Find the guaranteed values for the cells
-        private void FindGuaranteed(ref cell[,] board)
+        private void FindGuaranteed(cell[,] board)
         {
             bool found;
 
@@ -132,7 +132,7 @@ namespace Sudoku_Solver
                     {
                         if (board[i, j].possibleNumbers.Count == 1)
                         {
-                            SetCell(ref board, i, j, board[i, j].possibleNumbers.First());
+                            SetCell(board, i, j, board[i, j].possibleNumbers.First());
                             found = true;
                         }
                     }
@@ -174,7 +174,7 @@ namespace Sudoku_Solver
             //Removes that possibility from the parent board
             board[bestCords[0], bestCords[1]].possibleNumbers.Remove(guessedNumber);
             //Sets the value on the newBoard
-            SetCell(ref newBoard, bestCords[0], bestCords[1], guessedNumber);
+            SetCell(newBoard, bestCords[0], bestCords[1], guessedNumber);
             return newBoard;
         }
 
@@ -198,7 +198,7 @@ namespace Sudoku_Solver
         private cell[,] SolvingAlgorithm(cell[,] board)
         {
             //Finds the guaranteed spots on the board
-            FindGuaranteed(ref board);
+            FindGuaranteed(board);
 #if DEBUG
             PrintDebug(board);
 #endif
@@ -208,7 +208,7 @@ namespace Sudoku_Solver
             do
             {
                 //If it's evident with the guessing that it's impossible return null
-                if (IsImpossible(ref board))
+                if (IsImpossible(board))
                     return null;
 
                 cell[,] temp = Guess(board);

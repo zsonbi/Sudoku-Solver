@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -71,7 +68,7 @@ namespace Sudoku_Solver
         {
             BaseValues = ReadIn();
             sudoku = new Sudoku(BaseValues);
-            byte[,] solvedArray = await Task.Run(() => sudoku.Solve());
+            byte[,] solvedArray = await sudoku.Solve();
             if (solvedArray == null)
             {
                 MessageBox.Show("Impossible to solve");
@@ -89,6 +86,14 @@ namespace Sudoku_Solver
                 e.Handled = false;
             else
                 e.Handled = true;
+        }
+
+        //----------------------------------------------------------------------------------------------
+        //Empties every textbox's Text value
+        private void clearAllbtn_Click(object sender, RoutedEventArgs e)
+        {
+            BaseValues = new byte[9, 9];
+            WriteOut(BaseValues);
         }
     }
 }

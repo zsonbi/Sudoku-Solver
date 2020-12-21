@@ -258,10 +258,10 @@ namespace Sudoku_Solver
         /// Solves the sudoku which was inputted in the constructor
         /// </summary>
         /// <returns>The solved value if it's impossible it returns null</returns>
-        public byte[,] Solve()
+        public async Task<byte[,]> Solve()
         {
             byte[,] output = new byte[9, 9];
-            cells = SolvingAlgorithm(cells);
+            cells = await Task.Run(() => SolvingAlgorithm(cells));
             if (cells == null)
                 return null;
             //Converts the cells into a byte 2d array

@@ -140,6 +140,8 @@ namespace Sudoku_Solver
             } while (found);
         }
 
+        //----------------------------------------------------
+        //Makes a copy of the board then make a guess on the new board then return the new board if there is no possible guess left return null
         private cell[,] Guess(cell[,] board)
         {
             cell[,] newBoard = new cell[9, 9]; //deep copy of the board
